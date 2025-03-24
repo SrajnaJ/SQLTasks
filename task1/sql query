@@ -1,0 +1,91 @@
+creating table:
+CREATE TABLE unlabeled_images (
+    image_id INT,
+    score FLOAT
+);
+
+inserting values:
+INSERT INTO unlabeled_images (image_id, score) VALUES
+(101, 0.90),
+(202, 0.85),
+(345, 0.75),
+(463, 0.60),
+(502, 0.95),
+(607, 0.80),
+(710, 0.65),
+(823, 0.55),
+(933, 0.92),
+(1040, 0.70),
+(1123, 0.50),
+(1234, 0.65),
+(1345, 0.98),
+(1456, 0.78),
+(1567, 0.77),
+(1678, 0.66),
+(1789, 0.88),
+(1900, 0.45),
+(2001, 0.72),
+(2112, 0.82),
+(2234, 0.69),
+(2345, 0.74),
+(2456, 0.91),
+(2567, 0.68),
+(2678, 0.79),
+(2789, 0.80),
+(2890, 0.74),
+(3001, 0.56),
+(3123, 0.80),
+(3245, 0.88),
+(3356, 0.65),
+(3467, 0.91),
+(3578, 0.72),
+(3679, 0.54),
+(3780, 0.90),
+(3891, 0.65),
+(4002, 0.63),
+(4113, 0.77),
+(4224, 0.71),
+(4335, 0.88),
+(4446, 0.60),
+(4557, 0.68),
+(4668, 0.82),
+(4779, 0.84),
+(4880, 0.89),
+(4991, 0.74);
+
+
+Sampling query:
+
+// done by creating 3 cte namely ranked_images, positive_samples, negative_samples and
+  then union the positives and negatives
+// ranks are generated using the row_number() window function to be easily able to process every 3rd row.
+
+WITH ranked_images AS (
+    SELECT image_id, score,
+           row_number() OVER (ORDER BY score DESC) AS desc,
+           row_number() OVER (ORDER BY score ASC) AS asc
+    FROM unlabeled_images
+)
+, positive_samples AS (
+    SELECT image_id, 1 AS weak_label
+    FROM ranked_images
+    WHERE asc % 3 = 1
+    LIMIT 20
+)
+, negative_samples AS (
+    SELECT image_id, 0 AS weak_label
+    FROM ranked_images
+    WHERE desc % 3 = 1
+    LIMIT 20
+)
+
+
+Displaying result:
+  
+SELECT image_id, weak_label
+FROM (
+    SELECT * FROM positive_samples
+    UNION ALL
+    SELECT * FROM negative_samples
+) AS combined_samples
+ORDER BY image_id;
