@@ -1,0 +1,42 @@
+create database BlogApp;
+use BlogApp;
+
+create table user(
+  userID INT PRIMARY KEY,
+  username varchar(255),
+  email varchar(255),
+  passsword varchar(255),
+  bio text,
+  profilePicture varchar(255)
+);
+
+create table post(
+  postID int Primary key,
+  title varchar(255),
+  content text,
+  category varchar(100),
+  publicationDate timestamp,
+  tags VARCHAR(255),
+  userID int,
+  FOREIGN KEY (userID) REFERENCES user(userID)
+);
+
+create table comment(
+  commentID int primary key,
+  postID int,
+  userID int,
+  content text,
+  time timestamp,
+  foreign key(postID) references post(postID),
+  foreign key(userID) references user(userID)
+);
+
+create table interaction(
+  interactionID int primary key,
+  userID int,
+  postID int,
+  type varchar(100),
+  time timestamp,
+  foreign key(userID) references user(userID),
+  foreign key(postID) references post(postID)
+)
