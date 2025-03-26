@@ -1,6 +1,7 @@
 create database BlogApp;
 use BlogApp;
 
+//USER SCHEMA:-
 create table user(
   userID INT PRIMARY KEY,
   username varchar(255),
@@ -10,6 +11,7 @@ create table user(
   profilePicture varchar(255)
 );
 
+//POST SCHEMA:-
 create table post(
   postID int Primary key,
   title varchar(255),
@@ -21,6 +23,7 @@ create table post(
   FOREIGN KEY (userID) REFERENCES user(userID)
 );
 
+//COMMENT SCHEMA:-
 create table comment(
   commentID int primary key,
   postID int,
@@ -31,6 +34,7 @@ create table comment(
   foreign key(userID) references user(userID)
 );
 
+//INTERACTION SCHEMA:-
 create table interaction(
   interactionID int primary key,
   userID int,
