@@ -1,0 +1,38 @@
+ Query 5 - Retrive all users:
+Select * from user;
+
+Query 6 - Retrieve a specific user by userId:
+SELECT * FROM user WHERE userID = 1;
+
+Retrieve all posts: 
+select * from post;
+
+Retrieve a specific post by id:
+select * from post where post_id=2;
+
+Retrieve all posts from a specific user:
+select * from post where user_id=1;
+
+Query 7 - Retrieve all comments on a specific post:
+select * fom comment where post_id=2;
+
+Query 8 - Retrieve post along with their authors:
+SELECT post.title, post.content, user.username 
+FROM post 
+JOIN user ON post.userID = user.userID;
+
+Query 9 - Retrieve comments along with commenters names:
+SELECT comment.content, user.username, post.title 
+FROM comment 
+JOIN user ON comment.userID = user.userID 
+JOIN post ON comment.postID = post.postID;
+
+Query 10 - Retrieve the most recent posts (last 5):
+SELECT * FROM post ORDER BY publicationDate DESC LIMIT 5;
+
+Query 11 - Retrieve popular posts:
+SELECT post.postID, post.title, COUNT(interaction.interactionID) AS interaction_count
+FROM post
+LEFT JOIN interaction ON post.postID = interaction.postID
+GROUP BY post.postID
+ORDER BY interaction_count DESC;
