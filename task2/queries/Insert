@@ -1,0 +1,36 @@
+// Inserting into user table:
+INSERT INTO user (userID, username, email, password, bio, profilePicture)
+VALUES 
+(1, 'aditya_s', 'adi@example.com', 'hashed_password1', 'Tech enthusiast', 'aditya_pic.jpg'),
+(2, 'ritik_s', 'ritik@example.com', 'hashed_password2', 'Writer & Blogger', 'ritik_pic.jpg'),
+(3, 'ashmeet_s', 'ashmeet@example.com', 'hashed_password3', 'Marketing expert', 'ashmeet_pic.jpg'),
+(4, 'riya_b', 'riya@example.com', 'hashed_password4', 'Influencer', 'riya_pic.jpg')
+
+// Inserting into post table:
+INSERT INTO post (postID, title, content, category, publicationDate, tags, userID)
+VALUES 
+(1, 'My First Blog Post', 'This is my first blog post!', 'Tech', NOW(), 'blog,tech', 1),
+(2, 'Travel Guide', 'Best places to visit this summer.', 'Travel', NOW(), 'travel,summer', 2),
+(3, 'AI and the Future', 'Exploring AI advancements.', 'Technology', NOW(), 'AI,Tech,Future', 3),
+(4, 'Healthy Living Tips', 'How to maintain a healthy lifestyle.', 'Health', NOW(), 'health,wellness', 2),
+(5, 'Best Programming Languages', 'Top languages to learn in 2025.', 'Programming', NOW(), 'coding,software,dev', 4);
+
+//Inserting into comment table:
+INSERT INTO comment (commentID, postID, userID, content, time)
+VALUES 
+(1, 1, 2, 'Great insights on tech!', NOW()),
+(2, 2, 3, 'Love these travel tips!', NOW()),
+(3, 3, 4, 'AI is the future. Well written!', NOW()),
+(4, 4, 1, 'Thanks for the health advice.', NOW()),
+(5, 5, 2, 'Python and JavaScript are my favorites!', NOW()),
+(6, 1, 3, 'Looking forward to more tech blogs!', NOW());
+
+//Insering into interaction table:
+INSERT INTO interaction (interactionID, userID, postID, type, time)
+VALUES 
+(1, 2, 1, 'Like', NOW()),
+(2, 3, 2, 'Share', NOW()),
+(3, 4, 3, 'Like', NOW()),
+(4, 1, 4, 'Comment', NOW()),
+(5, 2, 5, 'Like', NOW()),
+(6, 3, 1, 'Share', NOW());
