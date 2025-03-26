@@ -1,0 +1,31 @@
+//creating a cte:
+WITH ranked_items AS (
+    SELECT 
+        ai.account_id, 
+        i.type, 
+        ai.quality, 
+        i.name,
+        RANK() OVER (
+            PARTITION BY ai.account_id, i.type 
+            ORDER BY 
+                CASE ai.quality 
+                    WHEN 'epic' THEN 3 
+                    WHEN 'rare' THEN 2 
+                    WHEN 'common' THEN 1 
+                END DESC
+        ) AS ranked_position
+    FROM accounts_items ai
+    JOIN items i ON ai.item_id = i.id
+)
+
+//displaying result:
+SELECT 
+    a.username, 
+    r.type, 
+    r.quality AS advised_quality, 
+    GROUP_CONCAT(r.name ORDER BY r.name ASC) AS advised_name
+FROM ranked_items r
+JOIN accounts a ON r.account_id = a.id
+WHERE r.ranked_position = 1  -- Get only the best quality items per user & type
+GROUP BY a.username, r.type, r.quality
+ORDER BY a.username ASC, r.type ASC;
