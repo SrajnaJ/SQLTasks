@@ -1,0 +1,46 @@
+TABLES AND ATTRIBUTES:
+
+1. USER TABLE (user) - this table stores info of the registered users on the application
+  userID (Primary Key)
+  username
+  email
+  password
+  bio
+  profilePicture
+
+2. POST TABLE (post) - this tables stores info of all the posts/blogs that has been posted on the  application
+  postID (Primary Key)
+  title
+  content
+  category
+  publicationDate
+  tags
+  userID (Foreign Key referencing userID in user) //user that made the post
+
+3. COMMENT TABLE (comment) - this table stores info of all comments posted on the application along with the post
+                             and user associated with the comment.
+  commentID (Primary Key)
+  postID (Foreign Key referencing postID in post)  //the post that has the comment
+  userID (Foreign Key referencing userID in user)  //user that commented
+  content
+  time
+
+4. INTERACTION TABLE (interaction) - this table stores info of other interactions like like, share and bookmark
+  interactionID (Primary Key)
+  userID (Foreign Key referencing userID in user) //the user that is making the interaction-(like, share,bookmark)
+  postID (Foreign Key referencing postID in post) // the post that has been interaced with
+  type (e.g., Like, Share)
+  time
+
+
+RELATIONSHIPS:
+User-Post relationship: one user can post many posts, but a post belongs to one user only 
+                        1 to Many
+User-Comment relation: one user can make multiple comments
+                        1 to Many
+Post-Comment relation: one post can have multiple comments
+                        1 to Many
+User-interaction relation: a user can perform many interactions
+                          1 : M
+Post-interaction : a post receives multiple interactions (multiple likes, shares and comments)
+                    1 : M
