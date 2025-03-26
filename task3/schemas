@@ -1,0 +1,21 @@
+//Accounts schema:
+CREATE TABLE accounts (
+  id INT primary key,
+  username varchar(255)
+);
+
+//Items schema:
+create table items(
+  id int primary key,
+  type ENUM('sword', 'shield', 'armor'),
+  name varchar(255)
+);
+
+//Accounts_items schema:
+create table accounts_items(
+  account_id int,
+  item_id int,
+  quality ENUM('common','rare','epic'),
+  foreign key (account_id) references accounts(id),
+  foreign key (item_id) references items(id)
+)
